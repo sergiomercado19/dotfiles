@@ -1,0 +1,18 @@
+#|-----------------------------------------------------------------------------|
+#| ZSH STARTUP FILE                                                            |
+#|-----------------------------------------------------------------------------|
+#|                                                                             |
+#| Runs first                                                                  |
+#|                                                                             |
+#| Sourced by:                                                                 |
+#|  ✅ login shells                                                            |
+#|  ✅ non-login shells                                                        |
+#|  ✅ interactive                                                             |
+#|  ✅ non-interactive                                                         |
+#|                                                                             |
+#| Info: https://zsh.sourceforge.io/Intro/intro_3.html                         |
+#|-----------------------------------------------------------------------------|
+
+export EDITOR='vim'
+export LANG='en_AU.UTF-8'
+

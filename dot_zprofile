@@ -1,0 +1,28 @@
+#|-----------------------------------------------------------------------------|
+#| ZSH STARTUP FILE                                                            |
+#|-----------------------------------------------------------------------------|
+#|                                                                             |
+#| Runs after:                                                                 |
+#|  - .zshenv                                                                  |
+#|  - .zshlogin                                                                |
+#|                                                                             |
+#| Sourced by:                                                                 |
+#|  ✅ login shells       ←──┐                                                 |
+#|  ❌ non-login shells      │                                                 |
+#|  ✅ interactive           │                                                 |
+#|  ✅ non-interactive    ←──┴── The focus of this script.                     |
+#|                                                                             |
+#| Info: https://zsh.sourceforge.io/Intro/intro_3.html                         |
+#|-----------------------------------------------------------------------------|
+
+# MacOS sets up Homebrew by telling the shell where its located
+if [ -x "/opt/homebrew/bin/brew" ]; then
+    eval "$(/opt/homebrew/bin/brew shellenv)"
+fi
+
+# Add JetBrains scripts to PATH
+JB_SCRIPTS="/Users/sergiomr/Library/Application Support/JetBrains/Toolbox/scripts"
+if [ -d "$JB_SCRIPTS" ]; then
+    export PATH="$PATH:$JB_SCRIPTS"
+fi
+
