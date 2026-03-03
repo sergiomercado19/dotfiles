@@ -26,3 +26,6 @@ if [ -d "$JB_SCRIPTS" ]; then
     export PATH="$PATH:$JB_SCRIPTS"
 fi
 
+# Add directories to the PATH
+export PATH="$HOME/.local/bin:$PATH"
+

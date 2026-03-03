@@ -65,3 +65,5 @@ eval "$(mise activate zsh)"
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+alias claude='CLAUDE_CODE_USE_BEDROCK=1 claude'
+
