@@ -53,17 +53,23 @@ eval "$(mise activate zsh)"
 # User Configuration
 # ==================
 
-# Set personal aliases, overriding those provided by Oh My Zsh libs,
-# plugins, and themes. Aliases can be placed here, though Oh My Zsh
-# users are encouraged to define aliases within a top-level file in
-# the $ZSH_CUSTOM folder, with .zsh extension. Examples:
-# - $ZSH_CUSTOM/aliases.zsh
-# - $ZSH_CUSTOM/macos.zsh
-# For a full list of active aliases, run `alias`.
-#
-# Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
+# Claude
+alias claude="CLAUDE_CODE_USE_BEDROCK=1 claude"
 
-alias claude='CLAUDE_CODE_USE_BEDROCK=1 claude'
+# CMS Development
+function cms_devpod_up() {
+    cd ~/work/canva
+    infra devpod create --name content-management-rpc --target dev --reason "CMS development" --bazel-target //backend/content_management_rpc:image
+}
+function cms_query_devpod_up() {
+    cd ~/work/canva
+    infra devpod create --name content-management-query-rpc --target dev --reason "CMS development" --bazel-target //backend/content_management_query_rpc:image
+}
+function cms_web_up() {
+    cd ~/work/canva/web
+    USER_LOCALE=en pnpm webpack-dev-server -e admin_cms -p iris-dev
+}
+alias cms-dev-1="cms_devpod_up"
+alias cms-dev-2="cms_query_devpod_up"
+alias cms-dev-3="cms_web_up"
 
