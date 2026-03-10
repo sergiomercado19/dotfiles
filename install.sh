@@ -116,13 +116,13 @@ fi
 print_step "Detected OS: $OS"
 
 # ============================================================================
-# Step 1: Install Git & ZSH
+# Step 1: Install Git, ZSH & tmux
 # ============================================================================
 install_git_zsh() {
-    print_step "Installing Git and ZSH..."
+    print_step "Installing Git, ZSH, and tmux..."
 
-    if command_exists git && command_exists zsh; then
-        print_success "Git and ZSH already installed"
+    if command_exists git && command_exists zsh && command_exists tmux; then
+        print_success "Git, ZSH, and tmux already installed"
         return
     fi
 
@@ -131,13 +131,13 @@ install_git_zsh() {
             case "$PKG_MANAGER" in
                 apt-get)
                     sudo apt-get update
-                    sudo apt-get install -y git zsh
+                    sudo apt-get install -y git zsh tmux
                     ;;
                 yum)
-                    sudo yum install -y git zsh
+                    sudo yum install -y git zsh tmux
                     ;;
                 pacman)
-                    sudo pacman -S --noconfirm git zsh
+                    sudo pacman -S --noconfirm git zsh tmux
                     ;;
             esac
             ;;
@@ -146,15 +146,16 @@ install_git_zsh() {
                 print_error "Homebrew not found. Installing Homebrew..."
                 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
             fi
-            brew install git zsh
+            brew install git zsh tmux
             ;;
     esac
 
-    print_success "Git and ZSH installed"
+    print_success "Git, ZSH, and tmux installed"
 
     # Verify installations
     verify_installation "git" "git --version"
     verify_installation "zsh" "zsh --version"
+    verify_installation "tmux" "tmux -V"
 }
 
 # ============================================================================

@@ -242,9 +242,9 @@ test_os_detection() {
 # ============================================================================
 run_all_tests() {
     echo ""
-    echo -e "${GREEN}╔════════════════════════════════════════╗${NC}"
-    echo -e "${GREEN}║     install.sh Unit Test Suite        ║${NC}"
-    echo -e "${GREEN}╚════════════════════════════════════════╝${NC}"
+    echo -e "${GREEN}╔════════════════════════════════════╗${NC}"
+    echo -e "${GREEN}║     install.sh Unit Test Suite     ║${NC}"
+    echo -e "${GREEN}╚════════════════════════════════════╝${NC}"
 
     # Configuration tests
     test_configuration_defaults
@@ -263,9 +263,9 @@ run_all_tests() {
 
     # Print summary
     echo ""
-    echo -e "${GREEN}╔════════════════════════════════════════╗${NC}"
-    echo -e "${GREEN}║          Test Summary                  ║${NC}"
-    echo -e "${GREEN}╚════════════════════════════════════════╝${NC}"
+    echo -e "${GREEN}╔════════════════════════════════╗${NC}"
+    echo -e "${GREEN}║          Test Summary          ║${NC}"
+    echo -e "${GREEN}╚════════════════════════════════╝${NC}"
     echo ""
     echo -e "Total Tests:  ${TESTS_RUN}"
     echo -e "${GREEN}Passed:       ${TESTS_PASSED}${NC}"
