@@ -13,6 +13,7 @@
 #| Info: https://zsh.sourceforge.io/Intro/intro_3.html                         |
 #|-----------------------------------------------------------------------------|
 
+export SHELL=$(which zsh)
 export EDITOR='vim'
 export LANG='en_AU.UTF-8'
 
