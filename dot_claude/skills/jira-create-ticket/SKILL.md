@@ -11,11 +11,38 @@ Creates Jira tickets in the **EXS (Experience Solutions)** project at `canva.atl
 
 ## Configuration
 
-- **Cloud ID**: `canva.atlassian.net` (resolved UUID: `d3a6b95b-bc47-4f92-b865-3ec7796e70f5`)
 - **Project**: `EXS`
 - **Default reporter**: Sergio Mercado-Ruiz (`61b5b14ef19b53006a67ed0c`)
 - **Default issue type**: `Task` (use `Story` or `Bug` if the user specifies)
 - **Backlog placement**: Tickets are created without a sprint, which places them in the backlog automatically.
+
+## Tools
+
+All Jira operations use the `otter` CLI:
+
+```bash
+otter mcp exec --no-confirm <tool_name> --param="value"
+```
+
+Available tools: `jira_search`, `jira_create`, `jira_link_issues`
+
+### Verifying secrets are configured
+
+Before making any Jira calls, run:
+
+```bash
+otter config mcp list
+```
+
+Check that `jira_api_token`, `jira_email`, and `jira_url` are all present. If any are missing, ask the user to set them:
+
+```bash
+otter config set-secret jira_api_token <atlassian-api-token>
+otter config set-secret jira_email <canva-email>
+otter config set-secret jira_url https://canva.atlassian.net
+```
+
+Atlassian API tokens can be generated at: https://id.atlassian.com/manage-profile/security/api-tokens
 
 ## Description
 
@@ -31,17 +58,17 @@ Collect the following from the user (or infer from context if obvious):
 - **Context / background** (top of description)
 - **Action items** (dot points)
 - **Impact** statement
+- **Priority** — one of: `Must have`, `Should have`, `Nice to have`, `Someday`
 
 ### Step 2 — Ask for the epic
 
-Before creating the ticket, always ask which epic it should belong to. Search for epics in the EXS project:
+Before creating any tickets, search for epics and ask the user to pick one. For a batch of tickets, ask **once** — reuse the same epic for all unless the user says otherwise.
 
-```
-Atlassian:searchJiraIssuesUsingJql
-  cloudId: "canva.atlassian.net"
-  jql: "project = EXS AND issuetype = Epic AND statusCategory != Done ORDER BY updated DESC"
-  fields: ["summary", "status", "key"]
-  maxResults: 20
+```bash
+otter mcp exec --no-confirm jira_search \
+  --jql="project = EXS AND issuetype = Epic AND statusCategory != Done ORDER BY updated DESC" \
+  --fields="summary,status" \
+  --limit=20
 ```
 
 Present the list to the user and ask them to pick one. If they already mentioned an epic name or key, confirm it or look it up first.
@@ -50,42 +77,69 @@ Present the list to the user and ask them to pick one. If they already mentioned
 
 Show the user a summary of what will be created:
 
-- Title
+- Title(s)
 - Epic
 - Description preview (abbreviated if long)
 
 Ask for explicit confirmation before proceeding.
 
-### Step 4 — Create the ticket
+### Step 4 — Create the ticket(s)
 
-Use `Atlassian:createJiraIssue` with:
+```bash
+otter mcp exec --no-confirm jira_create \
+  --summary="<title>" \
+  --project_key="EXS" \
+  --issue_type="Task" \
+  --parent_key="<epic key>" \
+  --description="<formatted markdown using the template>"
+```
 
+**Parameter reference:**
+- `summary` — ticket title (required)
+- `project_key` — always `EXS` (required)
+- `issue_type` — `Task`, `Story`, or `Bug` (required)
+- `parent_key` — epic key, e.g. `EXS-123` (optional)
+- `description` — markdown body following the template (optional)
+
+`jira_create` does not support setting priority. Immediately after creation, set it via `jira_update`:
+
+```bash
+otter mcp exec --no-confirm jira_update \
+  --ticket_id="<issue key>" \
+  --fields="priority=\"<priority value>\""
 ```
-cloudId: "canva.atlassian.net"
-projectKey: "EXS"
-issueTypeName: "Task"   // or "Story" / "Bug" as appropriate
-summary: <title>
-description: <formatted markdown using the template above>
-additional_fields:
-  reporter: { id: "61b5b14ef19b53006a67ed0c" }
-  parent: { key: "<epic key>" }
-```
+
+Valid priority values: `Must have`, `Should have`, `Nice to have`, `Someday`
 
 **Important notes:**
-- Do NOT set a sprint unless explicitly specified — omitting sprint places the issue in the backlog.
-- The `parent` field links to the epic in next-gen / team-managed projects. For classic projects, use `customfield_10014` (epic link) if `parent` doesn't work. Try `parent` first.
-- Reporter must always be set to Sergio's account ID above.
+- Do NOT set a sprint — omitting it places the issue in the backlog automatically.
+- There is no reporter parameter; reporter defaults correctly without it.
+- For batches, create all tickets first, then update their priorities in a second pass.
 
-### Step 5 — Return the link
+### Step 5 — Link dependencies
 
-After creation, share the issue key and a direct link:
+After creating multiple tickets, check whether any have dependencies on each other. If so, link them using `Blocks`:
+
+```bash
+otter mcp exec --no-confirm jira_link_issues \
+  --inward_issue="EXS-123" \
+  --outward_issue="EXS-456" \
+  --link_type="Blocks"
+# EXS-123 blocks EXS-456
+```
+
+**Available link types:** `Blocks`, `Depends`, `Relates`, `Duplicate`, `Contributes`, `Controls`, `Action`, `Impact`
+
+### Step 6 — Return the links
+
+After creation, share each issue key and its direct link:
 `https://canva.atlassian.net/browse/<ISSUE-KEY>`
 
 ## Example Description
 
 ```
-We currently have no automated way to track when third-party integrations go stale. 
-Engineers discover broken connections reactively, often after user reports. 
+We currently have no automated way to track when third-party integrations go stale.
+Engineers discover broken connections reactively, often after user reports.
 This creates support burden and degrades user trust.
 
 ### 🚀 Action Items
@@ -97,7 +151,7 @@ This creates support burden and degrades user trust.
 
 ### 💥 Impact
 
-Admins will be able to proactively identify and resolve broken integrations before users are affected, 
+Admins will be able to proactively identify and resolve broken integrations before users are affected,
 reducing integration-related support tickets and improving platform reliability.
 ```
 
@@ -106,4 +160,5 @@ reducing integration-related support tickets and improving platform reliability.
 - If the user provides all info upfront, skip straight to epic selection.
 - If no suitable epic exists, ask the user whether to create one first or proceed without an epic.
 - If the user specifies a different issue type (Story, Bug), use that instead of Task.
-- If the user wants to create multiple tickets at once, loop through each one, asking for epic per ticket (or confirm if they should all go under the same epic).
+- For a batch of tickets, ask for the epic once upfront and reuse it for all tickets unless the user specifies otherwise.
+
