@@ -45,7 +45,11 @@ List the dirty files so the user can act on them. Do not proceed until the worki
 
 ---
 
-## Step 3 — Push the branch
+## Step 3 — Push the branch and fetch context (run in parallel)
+
+Steps 3 and 4 are independent — run them at the same time.
+
+### 3a — Push the branch
 
 Run:
 ```bash
@@ -60,7 +64,12 @@ Capture stdout/stderr. If the push fails, surface the error to the user and stop
 
 ### 4a — Read the Jira ticket
 
-Use `Atlassian:getJiraIssue` with `cloudId: "canva.atlassian.net"` and the provided `jira_ticket_id`. Extract:
+Run:
+```bash
+otter mcp exec --no-confirm jira_get_issue --issue_key="<jira_ticket_id>"
+```
+
+Extract:
 - **Summary** (ticket title)
 - **Description** — specifically the background/context paragraph and the `### 🚀 Action Items` list
 
@@ -97,11 +106,26 @@ Compose a PR description using this template: `templates/pr-description.tmpl`. F
 
 ## Step 6 — Create the PR via GitHub CLI
 
+### 6a — Derive the PR title
+
+Build the title from the branch name, not just the Jira ticket summary:
+
+1. Extract the Jira ticket ID: `[EXS-1085]`
+2. Look for a scope/product label in the branch name (e.g. `quickflight` → `QuickFlight`, `payments` → `Payments`). Title-case it.
+3. Compose a short human-readable description from the remainder of the branch name, cross-referenced with the Jira ticket summary.
+
+Format: `[JIRA-ID] ScopeLabel - Description`
+Example: `[EXS-1085] QuickFlight - Add governance manifest to QuickPage`
+
+If no scope label is identifiable from the branch name, fall back to `[JIRA-ID] Description`.
+
+### 6b — Run `gh pr create`
+
 Run:
 ```bash
 gh pr create \
   --base <target_branch> \
-  --title "<Jira ticket summary>" \
+  --title "<title from 6a>" \
   --body "<PR description from Step 5>"
 ```
 
