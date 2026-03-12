@@ -1,0 +1,27 @@
+## 📄 Overview
+
+{{1–3 sentence summary of *why* this work exists, drawn from the Jira ticket background.}}
+
+## 🛠️ Changes
+
+{{Bullet list of concrete changes introduced by this PR, derived from the git diff. Group related changes together. Be specific about file/component names where helpful.}}
+
+### Jira Action Items Coverage
+
+{{For each action item in the Jira ticket, note whether it is:
+- ✅ Covered in this PR (with a brief note on how)
+- ⏳ Partially addressed (explain what's in and what's out)
+- 🔲 Not in scope for this PR (explain why, e.g. follow-up ticket)}}
+
+## 🌠 Preview
+
+- Sandbox link 🏰
+- Storybook link 📚
+
+## 🧪 Testing
+
+{{Brief notes on how to verify the changes, if inferable from the diff}}
+
+## 🎟️ Jira Ticket
+
+https://canva.atlassian.net/browse/{{jira_ticket_id}}

@@ -3,7 +3,7 @@ name: jira-create-ticket
 description: Creates Jira tickets in the EXS project (Experience Solutions) at canva.atlassian.net. Use this skill whenever the user asks to create a Jira ticket, issue, story, task, or bug in the EXS project or for the Experience Solutions board. Always use this skill when the user says things like "create a ticket", "file a Jira", "add a story", "log an issue", or "raise a ticket". The skill enforces a specific description template (context, action items, impact) and always prompts for the target epic before creating the ticket.
 ---
 
-# Create Jira Ticket (EXS Project)
+# Jira – Create Ticket (into the EXS Project)
 
 ## Overview
 

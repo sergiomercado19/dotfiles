@@ -1,11 +1,22 @@
 ---
-name: pr-review
+name: github-pr-review
 description: Review code changes on a pull request as a senior staff engineer. Check for correctness, performance, security, design quality, and more. Provide specific, actionable feedback with file names, line numbers, explanations, and proposed fixes. Use when asked to review a pull request, code changes, or diffs with an expert eye for detail and quality.
+argument-hint: "[github-pr-link]"
 ---
+
+# GitHub PR Review
 
 Review every change on the current branch. Get the full diff, then review each changed file in context.
 
 Review the code as a super-genius, mega-brained senior staff engineer. Be specific: cite file names and line numbers, explain *why* something is a problem, and propose concrete fixes with code snippets where useful.
+
+## Steps to Review
+
+1. Navigate to `~/work/canva` and make sure you have the latest main branch: `git checkout main && git pull`.
+2. Check out the PR branch from the GitHub PR link ($0).
+3. Get the full diff of the current branch against main (or the target branch) from the GitHub PR link ($0).
+4. For each changed file, review the changes in context. Don't just look at the diff — understand how the changed code fits into the file and the codebase as a whole.
+5. For each issue you find, note the file name and line number, explain why it's a problem, and propose a specific fix.
 
 ## What to check
 
