@@ -17,14 +17,16 @@ Pushes the current branch to GitHub, then writes and opens a Pull Request whose 
 
 ---
 
-## Step 1 — Confirm the working branch
+## Step 1 — Confirm the working branch and target
 
 Run:
 ```bash
 git branch --show-current
 ```
 
-Show the user the current branch name and ask: **"Is this the branch you want to publish as a PR?"**
+Show the user the current branch name and the target branch (from input, or `master` if not provided), then ask:
+
+**"Is this the branch you want to publish as a PR, merging into `<target_branch>`?"**
 
 Do not proceed until confirmed.
 
@@ -53,10 +55,15 @@ Steps 3 and 4 are independent — run them at the same time.
 
 Run:
 ```bash
+git push
+```
+
+Capture stdout/stderr. If the error output instructs you to set an upstream (e.g. "set the remote as upstream" / "use --set-upstream"), re-run:
+```bash
 git push --set-upstream origin <current-branch>
 ```
 
-Capture stdout/stderr. If the push fails, surface the error to the user and stop.
+If the push fails for any other reason, surface the error to the user and stop.
 
 ---
 
@@ -126,7 +133,8 @@ Run:
 gh pr create \
   --base <target_branch> \
   --title "<title from 6a>" \
-  --body "<PR description from Step 5>"
+  --body "<PR description from Step 5>" \
+  --assignee sergiomercado19
 ```
 
 If `gh` is not installed or the user is not authenticated, output the PR description as a code block and instruct the user to paste it manually when creating the PR on GitHub.
