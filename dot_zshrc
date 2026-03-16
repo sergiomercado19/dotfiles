@@ -55,6 +55,7 @@ eval "$(mise activate zsh)"
 
 # Claude
 alias claude='otter claude-code'
+alias claude-yolo='otter claude-code --dangerously-skip-permissions'
 
 # CMS Development
 function cms_devpod_up() {
