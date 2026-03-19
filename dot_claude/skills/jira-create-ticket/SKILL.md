@@ -31,18 +31,28 @@ Available tools: `jira_search`, `jira_create`, `jira_link_issues`
 Before making any Jira calls, run:
 
 ```bash
-otter config mcp list
+otter config mcp secret list
 ```
 
-Check that `jira_api_token`, `jira_email`, and `jira_url` are all present. If any are missing, ask the user to set them:
+Check that `jira_api_token`, `jira_email`, and `jira_url` all appear with an `OK` status. If any are missing, ask the user to set them:
 
 ```bash
-otter config set-secret jira_api_token <atlassian-api-token>
-otter config set-secret jira_email <canva-email>
-otter config set-secret jira_url https://canva.atlassian.net
+otter config mcp secret jira_api_token <atlassian-api-token>
+otter config mcp secret jira_email <canva-email>
+otter config mcp secret jira_url https://canva.atlassian.net
 ```
 
 Atlassian API tokens can be generated at: https://id.atlassian.com/manage-profile/security/api-tokens
+
+### Troubleshooting connectivity
+
+If Jira calls return 404s or empty results despite secrets being set, the most common causes are:
+
+1. **Missing `jira_url`** — the most common cause of silent empty results; verify it's set.
+2. **Wrong email** — the token must belong to the same Atlassian account as the email stored in `jira_email`.
+3. **Stale token** — regenerate at https://id.atlassian.com/manage-profile/security/api-tokens and re-run `otter config mcp secret jira_api_token <new-token>`.
+
+To diagnose, run `otter config mcp secret list --diagnose` and check that the redacted values (first 3 chars) match what you expect for each secret.
 
 ## Description
 
@@ -71,7 +81,13 @@ otter mcp exec --no-confirm jira_search \
   --limit=20
 ```
 
-Present the list to the user and ask them to pick one. If they already mentioned an epic name or key, confirm it or look it up first.
+Present the list to the user and ask them to pick one. If they already provided an epic key (e.g. `EXS-899`), skip the search and verify it directly:
+
+```bash
+otter mcp exec --no-confirm jira_get_issue --issue_key="EXS-899"
+```
+
+Confirm the summary with the user before proceeding.
 
 ### Step 3 — Confirm before creating
 
