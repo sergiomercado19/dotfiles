@@ -4,19 +4,16 @@
 
 ## 🛠️ Changes
 
-{{Bullet list of concrete changes introduced by this PR, derived from the git diff. Group related changes together. Be specific about file/component names where helpful.}}
-
-### Jira Action Items Coverage
-
-{{For each action item in the Jira ticket, note whether it is:
-- ✅ Covered in this PR (with a brief note on how)
-- ⏳ Partially addressed (explain what's in and what's out)
-- 🔲 Not in scope for this PR (explain why, e.g. follow-up ticket)}}
+{{List specific changes that might not be clear or apparent to a reviewer. Do not come up with potentially redundant info via negation of available context, only glean actually differentiated useful tidbits for the reviewer. Be specific about file/component names where helpful.}}
 
 ## 🌠 Preview
 
 - Sandbox link 🏰
 - Storybook link 📚
+
+| **Before** | **After** |
+| - | - |
+|  |  |
 
 ## 🧪 Testing
 

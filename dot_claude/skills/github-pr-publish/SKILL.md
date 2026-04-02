@@ -105,9 +105,10 @@ for the full diff. If the full diff is very large (>500 lines), use `--stat` plu
 Compose a PR description using this template: `templates/pr-description.tmpl`. Fill in the sections with the Jira ticket context and action items, and the summary of changes from the git diff.
 
 **Guidelines for writing the description:**
-- Changes section should be precise and technical — name functions, components, endpoints, configs that changed.
-- Action items coverage is the most important section: make the mapping explicit so reviewers understand the PR scope.
+- Changes section should be brief and only reserved for complex technical changes not obvious to the reviewer. It's okay to omit this section if everything is simple.
 - Do not pad with filler. If something is unknown, use a TODO placeholder rather than guessing.
+- Do not come up with potentially redundant info via negation of available context, only glean actually differentiated useful lines for the audience.
+- Only include the Before/After table if there are Frontend changes (typically, TypeScript or Storybook files)
 
 ---
 
