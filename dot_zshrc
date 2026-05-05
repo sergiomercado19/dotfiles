@@ -54,7 +54,7 @@ eval "$(mise activate zsh)"
 # ==================
 
 # Claude
-alias claude='otter claude-code'
+alias claude='otter claude-code --permission-mode auto'
 alias claude-yolo='otter claude-code --dangerously-skip-permissions'
 alias claude-symlink-otter-laptop='ln -s $HOME/.claude/rules $HOME/Library/Application\ Support/Otter/claude-code-user/rules; ln -s $HOME/.claude/skills $HOME/Library/Application\ Support/Otter/claude-code-user/skills'
 alias claude-symlink-otter-devbox='ln -s $HOME/.claude/rules $HOME/.config/otter/claude-code-user/rules; ln -s $HOME/.claude/skills $HOME/.config/otter/claude-code-user/skills'
