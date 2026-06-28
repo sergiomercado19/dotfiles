@@ -55,7 +55,7 @@ eval "$(mise activate zsh)"
 
 if grep -qEi "(Microsoft|WSL)" /proc/version &> /dev/null; then
   [ -f "$HOME/.zshrc_desktop" ] && source "$HOME/.zshrc_desktop"
-elif [[ "$OSTYPE" == "darwin"* ]] && [[ "$(git config user.email)" == *"@canva.com"* ]]; then
+elif [[ "$(git config user.email)" == *"@canva.com"* ]]; then
     [ -f "$HOME/.zshrc_work" ] && source "$HOME/.zshrc_work"
 fi
 
