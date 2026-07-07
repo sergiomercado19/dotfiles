@@ -18,7 +18,7 @@ function cms_query_devpod_up() {
 }
 function cms_web_up() {
     cd ~/work/canva/web
-    USER_LOCALE=en pnpm webpack-dev-server -e admin_cms -p iris-dev
+    USER_LOCALE=en-GB pnpm webpack-dev-server -e admin_cms -p iris-dev
 }
 alias cms-dev-1="cms_devpod_up"
 alias cms-dev-2="cms_query_devpod_up"
