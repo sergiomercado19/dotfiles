@@ -3,6 +3,7 @@
 # ==================
 
 # Claude
+alias claude='claude --auto'
 alias claude-yolo='claude --dangerously-skip-permissions'
 alias claude-symlink-otter-laptop='ln -s $HOME/.agents/rules $HOME/Library/Application\ Support/Otter/claude-code-user/rules; ln -s $HOME/.agents/skills $HOME/Library/Application\ Support/Otter/claude-code-user/skills'
 alias claude-symlink-otter-devbox='ln -s $HOME/.agents/rules $HOME/.config/otter/claude-code-user/rules; ln -s $HOME/.agents/skills $HOME/.config/otter/claude-code-user/skills'
