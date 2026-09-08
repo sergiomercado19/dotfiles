@@ -104,33 +104,6 @@ Example:
 If you catch yourself writing "new", "old", "legacy", "wrapper", "unified", or implementation details in names or comments, STOP and find a better name that describes the thing's
 actual purpose.
 
-### Code Comment Formatting
-
-- UNLESS OTHERWISE DIRECTED, multi-line section comments should be Taylor Otwell style (from Laravel): a header line approximately 74 characters long made of pipes and dashes, followed by description lines with pipes, ending with a closing line.
-- UNLESS OTHERWISE DIRECTED, single line section comments should have a header line approximately 74 characters long made of pipes and dashes.
-
-Example (TypeScript/JavaScript):
-```typescript
-/*
-|-------------------------------------------------------------------------------
-| Section Title
-|-------------------------------------------------------------------------------
-|
-| Description of what this section does. Can span multiple lines if needed.
-| And the following lines are kept constrained in length by well planned
-| wording or phrasing, to achieve a descent visual appearance.
-|
-*/
-```
-
-For simple section headers without descriptions:
-```typescript
-/*
-|-------------------------------------------------------------------------------
-| Section Title
-*/
-```
-
 ## Version Control
 
 - If the project isn't in a git repo, STOP and ask permission to initialize one.
