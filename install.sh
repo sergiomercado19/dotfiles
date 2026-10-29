@@ -343,7 +343,7 @@ set_zsh_default() {
         fi
 
         # Change default shell
-        chsh -s "$(which zsh)"
+        sudo chsh -s "$(which zsh)" "$USER"
         print_success "Default shell changed to ZSH (restart terminal to apply)"
     fi
 }
