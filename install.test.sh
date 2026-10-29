@@ -63,10 +63,10 @@ assert_contains() {
 source_install_functions() {
     local install_script="$HOME/.local/share/chezmoi/install.sh"
     # Source everything except:
-    # - Line 3: set -e
-    # - Line 116: print_step "Detected OS:"
-    # - Last line: main call
-    source <(sed -e '3d' -e '116d' "$install_script" | head -n -1)
+    # - set -e
+    # - print_step "Detected OS:"
+    # - main call
+    source <(sed -e '/^set -e$/d' -e '/^print_step "Detected OS:/d' -e '/^main$/d' "$install_script")
     # Ensure set +e is active for tests
     set +e
 }
@@ -185,6 +185,8 @@ test_check_dependencies() {
     output=$(check_dependencies 2>&1 || true)
     assert_contains "$output" "Missing required dependencies" "Should show error when deps missing"
     assert_contains "$output" "curl" "Should list missing dependency"
+
+    unset -f exit
 }
 
 # ============================================================================
