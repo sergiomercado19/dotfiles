@@ -1,4 +1,4 @@
-# dotfiles
+# Personal Dotfiles
 
 My personal dotfiles, managed with [chezmoi](https://www.chezmoi.io/): zsh
 (Oh My Zsh + Powerlevel10k), tmux, mise, and shared rules and skills for coding
@@ -76,8 +76,3 @@ bash install.test.sh
 
 Unit tests for the functions in `install.sh`. They pass on macOS (BSD tools) and
 Linux (GNU tools).
-
-## History
-
-This repo's history starts on 2026-10-29, when personal and work dotfiles were
-split into separate repos.
